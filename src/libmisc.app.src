@@ -1,0 +1,14 @@
+{application, libmisc,
+ [
+  {description, ""},
+  {vsn, "1.0.0"},
+  {modules, [libmisc]},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { libmisc_app, []}},
+  {env, []}
+ ]}.
+
