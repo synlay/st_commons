@@ -3,8 +3,10 @@
 
 -ifdef(debug).
     -define(TRACE(X), io:format("TRACE ~p:~p ~p~n", [?MODULE, ?LINE, X])).
+    -define(TRACEVAL(X), begin io:format("TRACE ~p:~p ~p~n", [?MODULE, ?LINE, X]), X end).
 -else.
     -define(TRACE(X), void).
+    -define(TRACEVAL(X), void).
 -endif.
 
 -define(ERR(Format, Data), error_logger:error_msg(Format, Data)).
