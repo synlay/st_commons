@@ -22,4 +22,7 @@
 -type dict(_K,_V) :: dict().
 %% ------------------------------------
 
+-type set(_Val) :: set().
+-type proplist(Key, Val) :: [{Key, Val}].
+
 -endif.
