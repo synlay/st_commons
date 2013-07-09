@@ -8,7 +8,6 @@
                   kernel,
                   stdlib
                  ]},
-  {mod, { libmisc_app, []}},
   {env, []}
  ]}.
 
