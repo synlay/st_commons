@@ -1,14 +1,23 @@
 -module(libmisc).
 -vsn("1.0.0").
 
--export([hex_to_bin/1,
-		 app_properties/1,
-		 get_optional/3,
-		 get_required/2]).
+-type epoch_timestamp() :: integer().
+
+-export_type([
+    epoch_timestamp/0
+]).
+
+-export([
+     hex_to_bin/1
+	,app_properties/1
+	,get_optional/3
+	,get_required/2
+    ,epoch_timestamp/0
+]).
 
 -include("libmisc.hrl").
 
--spec ?MODULE:hex_to_bin(string()) -> binary().
+-spec hex_to_bin(string()) -> binary().
 hex_to_bin(Str) ->
     << << (erlang:list_to_integer([H], 16)):4 >> || H <- Str >>.
 
@@ -62,3 +71,8 @@ get_required(AppEnv, Key) ->
         {ok, Value} ->
             Value
     end.
+
+-spec epoch_timestamp() -> EpochTimestamp when
+    EpochTimestamp :: epoch_timestamp().
+epoch_timestamp() ->
+    calendar:datetime_to_gregorian_seconds(calendar:universal_time()) - 62167219200.
