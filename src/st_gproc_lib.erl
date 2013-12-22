@@ -24,6 +24,11 @@
     ,reg_delete_property/2
     ,reg_set_value/2
     ,reg_lookup_value/1
+    ,reg_create_counter/2
+    ,reg_delete_counter/1
+    ,reg_incr_counter/1
+    ,reg_decr_counter/1
+    ,reg_lookup_counter/1
 ]).
 
 -spec reg_update_property(Key, PropertyKey, PropertyValue) -> ok | {error, Reason} when
@@ -95,4 +100,70 @@ reg_lookup_value(Key) ->
             {error, not_found};
         Value ->
             {ok, Value}
+    end.
+
+-spec reg_create_counter(Key, Initial) -> ok | {error, Reason} when
+    Key     :: key(),
+    Initial :: integer(),
+    Reason  :: term().
+reg_create_counter(Key, Initial) ->
+    case catch gproc:add_shared_local_counter(Key, Initial) of
+        {'EXIT', _Reason} ->
+            {error, already_existing};
+        true ->
+            ok
+    end.
+
+-spec reg_delete_counter(Key) -> ok | {error, Reason} when
+    Key     :: key,
+    Reason  :: term().
+reg_delete_counter(Key) ->
+    case catch gproc:unreg_shared({c, l, Key}) of
+        {'EXIT', _Reason} ->
+            {error, non_existing};
+        true ->
+            ok
+    end.
+
+-spec reg_incr_counter(Key) -> {ok, Counter} | {error, Reason} when
+    Key     :: key(),
+    Counter :: integer(),
+    Reason  :: term().
+reg_incr_counter(Key) ->
+    case catch gproc:update_shared_counter({c, l, Key}, 1) of
+        {'EXIT', _Reason} ->
+            {error, non_existing};
+        Counter ->
+            {ok, Counter}
+    end.
+
+-spec reg_decr_counter(Key) -> {ok, Counter} | {error, Reason} when
+    Key     :: key(),
+    Counter :: integer(),
+    Reason  :: term().
+reg_decr_counter(Key) ->
+    case catch gproc:update_shared_counter({c, l, Key}, -1) of
+        {'EXIT', _Reason} ->
+            {error, non_existing};
+        Counter ->
+            {ok, Counter}
+    end.
+
+-spec reg_lookup_counter(Key) -> {ok, Counter} | {error, Reason} when
+    Key     :: key(),
+    Counter :: integer(),
+    Reason  :: term().
+reg_lookup_counter(Key) ->
+    case catch gproc:lookup_local_counters(Key) of
+        {'EXIT', _Reason} ->
+            {error, non_existing};
+        [] ->
+            {error, non_existing};
+        Counters ->
+            case proplists:get_value(shared, Counters) of
+                undefined ->
+                    {error, non_existing};
+                Counter ->
+                    {ok, Counter}
+            end
     end.
