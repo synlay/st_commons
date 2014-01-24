@@ -13,5 +13,5 @@
 -define(INFO(Format, Data), error_logger:info_msg(Format, Data)).
 
 -define(GEN_SERVER_ATTRIB, [{debug, [log]}]).
-                    
+
 -endif.

@@ -5,17 +5,17 @@
 
 -type maybe(A) :: undefined  % <=> nothing, but more erlang like
                 | {just, A}.
-                
+
 -type either(A, B) :: {left, A}
                     | {right, B}.
-                    
+
 %% ------------------------------------
 %% Type: dict
 %% where:
 %%    _K: a key of any type
-%%    _V: a value of any type 
+%%    _V: a value of any type
 %% description:
-%%    polymorphic type wrapper for 
+%%    polymorphic type wrapper for
 %%    the type dict(), for better
 %%    documentation purposes.
 %% ------------------------------------

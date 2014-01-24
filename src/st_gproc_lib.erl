@@ -93,7 +93,7 @@ reg_set_value(Key, Value) ->
 -spec reg_lookup_value(Key) -> {ok, Value} | {error, Reason} when
     Key    :: key(),
     Value  :: value(),
-    Reason :: term().
+    Reason :: not_found.
 reg_lookup_value(Key) ->
     case catch gproc:get_value_shared({p, l, Key}) of
         {'EXIT', _Reason} ->
