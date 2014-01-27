@@ -77,17 +77,3 @@ get_required(AppEnv, Key) ->
     EpochTimestamp :: epoch_timestamp().
 epoch_timestamp() ->
     calendar:datetime_to_gregorian_seconds(calendar:universal_time()) - 62167219200.
-
-%% @doc Throws an exception with the return value of Fun if it doesn't equals
-%%      Pattern, otherwise Pattern will be returned.
-%%      GuardExpr must be any value that can be be used for pattern matching.
--spec throw_ifneq(Fun, Pattern) -> Pattern | none() when
-    Fun     :: fun(() -> term()),
-    Pattern :: term().
-throw_ifneq(Fun, Pattern) ->
-    case Fun() of
-        Pattern ->
-            Pattern;
-        Other ->
-            throw(Other)
-    end.
