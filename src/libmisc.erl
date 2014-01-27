@@ -13,7 +13,6 @@
 	,get_optional/3
 	,get_required/2
     ,epoch_timestamp/0
-    ,throw_ifneq/2
 ]).
 
 -include("libmisc.hrl").
