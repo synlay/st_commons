@@ -9,6 +9,8 @@
 -type either(A, B) :: {left, A}
                     | {right, B}.
 
+-ifdef(have_not_parameterized_dict_and_sets_support).
+
 %% ------------------------------------
 %% Type: dict
 %% where:
@@ -23,6 +25,8 @@
 %% ------------------------------------
 
 -type set(_Val) :: set().
+-endif.
+
 -type proplist(Key, Val) :: [{Key, Val}].
 
 -endif.
