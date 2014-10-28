@@ -9,10 +9,11 @@
 
 -export([
      hex_to_bin/1
-	,app_properties/1
-	,get_optional/3
-	,get_required/2
+    ,app_properties/1
+    ,get_optional/3
+    ,get_required/2
     ,epoch_timestamp/0
+    ,id/1
 ]).
 
 -include("libmisc.hrl").
@@ -76,3 +77,8 @@ get_required(AppEnv, Key) ->
     EpochTimestamp :: epoch_timestamp().
 epoch_timestamp() ->
     calendar:datetime_to_gregorian_seconds(calendar:universal_time()) - 62167219200.
+
+-spec id(Object::any()) -> Object::any().
+%% @doc Identity function
+id(Object) ->
+    Object.
