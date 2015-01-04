@@ -25,8 +25,12 @@
 %% ------------------------------------
 
 -type set(_Val) :: set().
+-else
+%% Erl >= 17 => maps support available
+-type map(Key, Value) :: #{Key => Value}.
 -endif.
 
--type proplist(Key, Val) :: [{Key, Val}].
+-type proplist(Key, Value) :: [{Key, Value}].
+-type orddict(Key, Value)  :: [{Key, Value}].
 
 -endif.
