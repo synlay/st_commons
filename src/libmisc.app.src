@@ -1,14 +1,12 @@
 {application, libmisc,
  [
   {description, ""},
-  {vsn, "1.0.0"},
+  {vsn, "1.1.0"},
   {modules, [libmisc]},
   {registered, []},
   {applications, [
                   kernel,
-                  stdlib,
-                  gproc
+                  stdlib
                  ]},
   {env, []}
  ]}.
-
