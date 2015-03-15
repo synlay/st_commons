@@ -25,7 +25,7 @@
 %% ------------------------------------
 
 -type set(_Val) :: set().
--else
+-else.
 %% Erl >= 17 => maps support available
 -type map(Key, Value) :: #{Key => Value}.
 -endif.
