@@ -3,3 +3,4 @@ ebin
 deps
 deps.plt
 .rebar
+.concrete
