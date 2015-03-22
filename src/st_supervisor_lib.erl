@@ -35,6 +35,7 @@
 %% API
 -export_type([
      supervisor_module/0
+    ,restart/0
     ,shutdown/0
     ,max_restarts/0
     ,max_sec_between_restart/0
