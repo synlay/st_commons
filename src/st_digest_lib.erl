@@ -30,11 +30,11 @@ hexbinarystring(BinaryDigest, false) when is_binary(BinaryDigest) ->
 hexbinarystring(BinaryDigest, true) when is_binary(BinaryDigest) ->
     << << (list_to_binary(io_lib:format("~2.16.0B", [C])))/binary >> || <<C>> <= BinaryDigest >>.
 
--spec hexstring(BinaryDigest :: binary()) -> BinaryString :: binary().
+-spec hexstring(BinaryDigest :: binary()) -> DigestString :: string().
 hexstring(BinaryDigest) ->
     hexstring(BinaryDigest, false).
 
--spec hexstring(BinaryDigest :: binary(), UpperCase :: boolean()) -> BinaryString :: binary().
+-spec hexstring(BinaryDigest :: binary(), UpperCase :: boolean()) -> DigestString :: string().
 hexstring(BinaryDigest, false) when is_binary(BinaryDigest) ->
     lists:flatten([io_lib:format("~2.16.0b", [B]) || <<B>> <= BinaryDigest]);
 hexstring(BinaryDigest, true) when is_binary(BinaryDigest) ->

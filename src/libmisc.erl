@@ -12,7 +12,6 @@
     ,app_properties/1
     ,get_optional/3
     ,get_required/2
-    ,epoch_timestamp/0
     ,id/1
 ]).
 
@@ -72,11 +71,6 @@ get_required(AppEnv, Key) ->
         {ok, Value} ->
             Value
     end.
-
--spec epoch_timestamp() -> EpochTimestamp when
-    EpochTimestamp :: epoch_timestamp().
-epoch_timestamp() ->
-    calendar:datetime_to_gregorian_seconds(calendar:universal_time()) - 62167219200.
 
 -spec id(Object::any()) -> Object::any().
 %% @doc Identity function
