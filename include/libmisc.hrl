@@ -21,4 +21,15 @@
                                                        end)())
                                                    end).
 
+-define(maybe_get_default(Value, DefaultGuard, Default), begin
+                                                             ((fun() ->
+                                                                 case (Value) of
+                                                                     DefaultGuard ->
+                                                                         Default;
+                                                                     Result ->
+                                                                         Result
+                                                                 end
+                                                             end)())
+                                                         end).
+
 -endif.
