@@ -61,8 +61,8 @@ EDown = case proplists:get_value(use_edown, CONFIG) of
                 [DocOpts,
                  {deps,
                   [{edown, ".*",
-                    {git, "git://github.com/seth/edown.git",
-                     {branch, "master"}}}]}]
+                    {git, "https://github.com/uwiger/edown.git",
+                     "8d7e7cac24fd9c3137cbd03fe36ce98eeff2ccac"}}]}]
            end,
 
 LockDeps = case proplists:get_value(use_lock_deps, CONFIG) of
@@ -93,16 +93,5 @@ case filelib:is_file(DevMarker) of
         %% returns the config specified in rebar.config. This will be
         %% the behavior when the project is built as a dependency of
         %% another project.
-        CONFIG
-end,
-
-{match, [ErtsNumber]} = re:run(erlang:system_info(otp_release), "(\\d+)", [{capture, [0], list}]),
-ErtsVsn = erlang:list_to_integer(ErtsNumber),
-if
-    ErtsVsn < 17 ->
-        OldOpts = proplists:get_value(erl_opts, CONFIG, []),
-        NewOpts = [{d, have_not_parameterized_dict_and_sets_support} | OldOpts],
-        lists:keystore(erl_opts, 1, CONFIG, {erl_opts, NewOpts});
-    true ->
         CONFIG
 end.

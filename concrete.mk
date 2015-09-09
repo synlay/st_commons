@@ -37,6 +37,7 @@ REBARC = $(REBAR) -C $(REBAR_CONFIG)
 
 # For use on Travis CI, skip dialyzer for R14 and R15. Newer versions
 # have a faster dialyzer that is less likely to cause a build timeout.
+SKIP_DIALYZER ?= false
 DIALYZER = dialyzer
 R14 = $(findstring R14,$(TRAVIS_OTP_RELEASE))
 R15 = $(findstring R15,$(TRAVIS_OTP_RELEASE))
@@ -46,7 +47,7 @@ endif
 ifneq ($(R15),)
 DIALYZER = echo "SKIPPING dialyzer"
 endif
-ifneq ($(SKIP_DIALYZER),)
+ifneq ($(SKIP_DIALYZER),false)
 DIALYZER = echo "SKIPPING dialyzer"
 endif
 
@@ -83,7 +84,7 @@ ERLANG_DIALYZER_APPS ?= asn1 \
                         tools \
                         xmerl
 
-PROJ = $(notdir $(CURDIR))
+PROJ ?= $(notdir $(CURDIR))
 
 # Let's compute $(BASE_PLT_ID) that identifies the base PLT to use for this project
 # and depends on your `$(ERLANG_DIALYZER_APPS)' list and your erlang version
@@ -118,7 +119,7 @@ ifeq ($(TRAVIS),true)
 ## reported by make otp_version
 ## s3cmd put --acl-public --guess-mime-type <FILENAME> s3://concrete-plts
 
-BASE_PLT := travis-erlang-$(ERLANG_VERSION).plt
+BASE_PLT := travis-erlang-$(TRAVIS_OTP_RELEASE).plt
 BASE_PLT_URL := http://s3.amazonaws.com/concrete-plts/$(BASE_PLT)
 else
 BASE_PLT := ~/.concrete_dialyzer_plt_$(BASE_PLT_ID)_$(ERLANG_VERSION).plt
@@ -130,7 +131,7 @@ endif
 all: .concrete/DEV_MODE $(DEPS)
 	@$(MAKE) all_but_dialyzer dialyzer
 
-all_but_dialyzer: .concrete/DEV_MODE compile eunit $(ALL_HOOK)
+all_but_dialyzer: .concrete/DEV_MODE compile $(ALL_HOOK) eunit
 
 $(REBAR):
 	curl -Lo rebar $(REBAR_URL) || wget $(REBAR_URL)
@@ -143,7 +144,7 @@ get-rebar: $(REBAR)
 	@touch $@
 
 # Clean ebin and .eunit of this project
-clean:
+clean: $(CLEAN_HOOK)
 	@$(REBARC) clean skip_deps=true
 
 # Clean this project and all deps
@@ -168,13 +169,16 @@ eunit:
 
 test: eunit
 
+## Override DIALYZER_SRC if your beams live somewhere else
+DIALYZER_SRC ?= -r ebin
+
 # Only include local PLT if we have deps that we are going to analyze
 ifeq ($(strip $(DIALYZER_DEPS)),)
 dialyzer: $(BASE_PLT)
-	@$(DIALYZER) $(DIALYZER_OPTS) --plts $(BASE_PLT) -r ebin
+	@$(DIALYZER) $(DIALYZER_OPTS) --plts $(BASE_PLT) $(DIALYZER_SRC)
 else
 dialyzer: $(BASE_PLT) $(DEPS_PLT)
-	@$(DIALYZER) $(DIALYZER_OPTS) --plts $(BASE_PLT) $(DEPS_PLT) -r ebin
+	@$(DIALYZER) $(DIALYZER_OPTS) --plts $(BASE_PLT) $(DEPS_PLT) $(DIALYZER_SRC)
 
 $(DEPS_PLT):
 	@$(DIALYZER) --build_plt $(DIALYZER_DEPS) --output_plt $(DEPS_PLT)
@@ -216,7 +220,7 @@ RELX_OPTS ?=
 RELX_OUTPUT_DIR ?= _rel
 ifeq ($(RELX),)
 RELX = $(CURDIR)/relx
-RELX_VERSION = 1.0.4
+RELX_VERSION ?= 1.0.4
 else
 RELX_VERSION = $(shell relx --version)
 endif
@@ -230,21 +234,17 @@ else
 RELX_RELEASE_DIR = $(RELX_OUTPUT_DIR)/$(PROJ)
 endif
 
+REL_HOOK ?= all_but_dialyzer
+
 $(RELX):
 	curl -Lo relx $(RELX_URL) || wget $(RELX_URL)
 	chmod a+x relx
 
-rel: relclean all_but_dialyzer $(RELX)
+rel: relclean $(REL_HOOK) $(RELX)
 	@$(RELX) -c $(RELX_CONFIG) -o $(RELX_OUTPUT_DIR) $(RELX_OPTS)
 
-devrel: rel
-devrel: lib_dir=$(wildcard $(RELX_RELEASE_DIR)/lib/$(PROJ)-* )
-devrel:
-	@/bin/echo Symlinking deps and apps into release
-	@rm -rf $(lib_dir); mkdir -p $(lib_dir)
-	@ln -sf `pwd`/ebin $(lib_dir)
-	@ln -sf `pwd`/priv $(lib_dir)
-	@ln -sf `pwd`/src $(lib_dir)
+devrel: relclean $(REL_HOOK) $(RELX)
+	@$(RELX) --dev-mode -c $(RELX_CONFIG) -o $(RELX_OUTPUT_DIR) $(RELX_OPTS)
 
 relclean:
 	rm -rf $(RELX_OUTPUT_DIR)
@@ -274,4 +274,4 @@ update_locked_config:
 otp_version:
 	@echo $(ERLANG_VERSION)
 
-.PHONY: all all_but_dialyzer compile eunit test dialyzer clean allclean relclean distclean doc tags get-rebar rel devrel
+.PHONY: all all_but_dialyzer compile eunit test dialyzer clean allclean relclean distclean doc tags get-rebar rel devrel otp_version
