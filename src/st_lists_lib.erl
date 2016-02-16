@@ -39,7 +39,7 @@ filterzipwith(F, [], []) when is_function(F, 2) ->
 -spec is_empty(List1) -> Result when
     List1 :: [X],
     X :: term(),
-    Result :: boolean.
+    Result :: boolean().
 %% @doc Return true if list is empty.
 is_empty([]) ->
     true;
