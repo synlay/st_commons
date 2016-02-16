@@ -12,6 +12,7 @@
 %% API
 -export([
     filterzipwith/3
+    , is_empty/1
 ]).
 
 -spec filterzipwith(Combine, List1, List2) -> List3 when
@@ -34,3 +35,13 @@ filterzipwith(F, [X | Xs], [Y | Ys]) ->
     end;
 filterzipwith(F, [], []) when is_function(F, 2) ->
     [].
+
+-spec is_empty(List1) -> Result when
+    List1 :: [X],
+    X :: term(),
+    Result :: boolean.
+%% @doc Return true if list is empty.
+is_empty([]) ->
+    true;
+is_empty(_) ->
+    false.
