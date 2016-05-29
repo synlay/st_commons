@@ -20,6 +20,7 @@
     ,datetime_older_than_sec/1
     ,epoch_timestamp/0
     ,epoch_timestamp/1
+    ,epoch_timestamp_to_universal_datetime/1
 ]).
 
 -spec datetime_now() -> calendar:datetime().
@@ -43,3 +44,9 @@ epoch_timestamp() ->
     EpochTimestamp :: epoch_timestamp().
 epoch_timestamp(Now) ->
     calendar:datetime_to_gregorian_seconds(Now) - 62167219200.
+
+-spec epoch_timestamp_to_universal_datetime(EpochTimestamp) -> DateTime when
+    EpochTimestamp :: epoch_timestamp(),
+    DateTime       :: calendar:datetime().
+epoch_timestamp_to_universal_datetime(EpochTimestamp) ->
+    calendar:gregorian_seconds_to_datetime(EpochTimestamp + 62167219200).
