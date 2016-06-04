@@ -27,7 +27,7 @@
 %% @doc Tries to parses an ip_address() and returns an IPv4 or IPv6 address string.
 -spec peer_ip_string(PeerIp :: inet:ip_address()) -> PeerIpString :: peer_string().
 peer_ip_string(PeerIp) ->
-    ?maybe_get_default(inet:ntoa(PeerIp), {error, einval}, lists:flatten(io_lib:format("~p", [PeerIp]))).
+    ?maybe_get_default(inet:ntoa(PeerIp), {error, einval}, lists:flatten(io_lib:format("~s", [PeerIp]))).
 
 %% @doc Normailze a peers IP address. IPv6 for example could have small
 %%      hex characters.
