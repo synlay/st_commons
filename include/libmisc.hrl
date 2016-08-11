@@ -1,7 +1,7 @@
 -ifndef(_lib_miscincluded).
 -define(_lib_miscincluded, true).
 
--include("common_types.hrl").
+-include("common_constants.hrl").
 
 %-export([hex_to_bin/1]).
 
@@ -20,5 +20,16 @@
                                                            end
                                                        end)())
                                                    end).
+
+-define(maybe_get_default(Value, DefaultGuard, Default), begin
+                                                             ((fun() ->
+                                                                 case (Value) of
+                                                                     DefaultGuard ->
+                                                                         Default;
+                                                                     Result ->
+                                                                         Result
+                                                                 end
+                                                             end)())
+                                                         end).
 
 -endif.

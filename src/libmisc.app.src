@@ -1,7 +1,7 @@
 {application, libmisc,
  [
   {description, ""},
-  {vsn, "1.1.0"},
+  {vsn, "1.2.0"},
   {modules, [libmisc]},
   {registered, []},
   {applications, [
