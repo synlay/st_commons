@@ -6,7 +6,7 @@
 %%% @end
 %%% Created : 24. Mrz 2015 12:44
 %%%-------------------------------------------------------------------
--module(st_commons_traverse_utils).
+-module(st_traverse_utils).
 -author("Nils Ernsting").
 
 -type field_name() :: string() | binary() | atom().
