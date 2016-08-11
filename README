@@ -3,6 +3,6 @@ Dependencies
 . make
 
 Build
-To build the libmisc library just run make.
+To build the st_commons library just run make.
 $ make
 

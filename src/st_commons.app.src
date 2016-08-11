@@ -1,8 +1,8 @@
-{application, libmisc,
+{application, st_commons,
  [
   {description, ""},
   {vsn, "1.2.0"},
-  {modules, [libmisc]},
+  {modules, [st_commons]},
   {registered, []},
   {applications, [
                   kernel,
