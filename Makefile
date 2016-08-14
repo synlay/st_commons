@@ -1,8 +1,17 @@
-REBAR=rebar3
+REBAR ?= $(shell which rebar3)
 
-.PHONY: all compile test dialyze distclean rebuild rel tar
+ifeq ($(REBAR),)
+REBAR = $(CURDIR)/rebar3
+endif
 
-all: compile test dialyze
+REBAR_URL=https://s3.amazonaws.com/rebar3/rebar3
+
+all: $(REBAR) compile test dialyze
+
+$(REBAR):
+	curl -Lo rebar3 $(REBAR_URL) || wget $(REBAR_URL)
+	chmod a+x rebar3
+	./rebar3 update
 
 compile:
 	@$(REBAR) compile
@@ -31,3 +40,5 @@ rel:
 
 tar:
 	@$(REBAR) as prod tar
+
+.PHONY: all compile test dialyze distclean rebuild rel tar
