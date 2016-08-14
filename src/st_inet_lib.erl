@@ -9,7 +9,7 @@
 -module(st_inet_lib).
 -author("David Robakowski").
 
--include("libmisc.hrl").
+-include("st_commons.hrl").
 
 -type peer_string() :: [byte()].
 

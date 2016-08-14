@@ -1,7 +1,7 @@
--ifndef(_lib_miscincluded).
--define(_lib_miscincluded, true).
+-ifndef(_st_commonsincluded).
+-define(_st_commonsincluded, true).
 
--include("common_constants.hrl").
+-include("st_commons_constants.hrl").
 
 %-export([hex_to_bin/1]).
 
