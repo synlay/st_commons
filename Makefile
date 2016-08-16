@@ -29,7 +29,7 @@ ci: test dialyze
 ifeq ($(TRAVIS),true)
 dialyze:
 	@echo starting static code analysis with dialyzer...
-	@sudo make dialyzer_concrete
+	@make dialyzer_concrete
 else
 dialyze:
 	@echo starting static code analysis with dialyzer...
@@ -80,7 +80,7 @@ DEPS_LIST = $(filter-out $(DIALYZER_SKIP_DEPS), $(ALL_DEPS))
 # This list is then used by dialyzer in creating the local PLT
 DIALYZER_DEPS = $(foreach dep,$(DEPS_LIST),_build/default/lib/$(dep)/ebin)
 
-DEPS_PLT = _build/test/deps.plt
+DEPS_PLT = deps.plt
 
 ERLANG_DIALYZER_APPS ?= asn1 \
                         compiler \
