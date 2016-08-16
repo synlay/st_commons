@@ -29,7 +29,7 @@ ci: test dialyze
 ifeq ($(TRAVIS),true)
 dialyze:
 	@echo starting static code analysis with dialyzer...
-	@make dialyzer_concrete
+	@sudo make dialyzer_concrete
 else
 dialyze:
 	@echo starting static code analysis with dialyzer...
