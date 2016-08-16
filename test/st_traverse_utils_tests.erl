@@ -29,7 +29,7 @@ get_element_tests(_) ->
         {"Result should be undefined", ?_assertEqual(undefined, st_traverse_utils:get_element(key, undefined))}
         , {"Result should be undefined", ?_assertEqual(undefined, st_traverse_utils:get_element(key, [{other_key, 1}]))}
         , {"Result should be 1", ?_assertEqual(1, st_traverse_utils:get_element(key, [{key, 1}]))}
-        , {"Result should be 1", ?_assertEqual(1, st_traverse_utils:get_element(key, #{key => 1}))}
+        , {"Result should be 1", ?_assertEqual(1, st_traverse_utils:get_element(key, maps:from_list([{key, 1}])))}
     ].
 
 traverse_by_list_tests(_) ->
@@ -37,8 +37,8 @@ traverse_by_list_tests(_) ->
         {"Result should be undefined", ?_assertEqual(undefined, st_traverse_utils:traverse_by_list([key], undefined))}
         , {"Result should be undefined", ?_assertEqual(undefined, st_traverse_utils:traverse_by_list([key], [{other_key, 1}]))}
         , {"Result should be 1", ?_assertEqual(1, st_traverse_utils:traverse_by_list([key], [{key, 1}]))}
-        , {"Result should be 1", ?_assertEqual(1, st_traverse_utils:traverse_by_list([key], #{key => 1}))}
-        , {"Result should be undefined", ?_assertEqual(undefined, st_traverse_utils:traverse_by_list([parent, key], #{key => 1}))}
+        , {"Result should be 1", ?_assertEqual(1, st_traverse_utils:traverse_by_list([key], maps:from_list([{key, 1}])))}
+        , {"Result should be undefined", ?_assertEqual(undefined, st_traverse_utils:traverse_by_list([parent, key], maps:from_list([{key, 1}])))}
         , {"Result should be undefined", ?_assertEqual(undefined, st_traverse_utils:traverse_by_list([parent, key], [{parent, [{other_key, 1}]}]))}
         , {"Result should be undefined", ?_assertEqual(undefined, st_traverse_utils:traverse_by_list([parent, key], [{key, [{parent, 1}]}]))}
         , {"Result should be 1", ?_assertEqual(1, st_traverse_utils:traverse_by_list([parent, key], [{parent, [{key, 1}]}]))}
@@ -66,7 +66,7 @@ key_exists(_) ->
         {"Result should be false", ?_assertEqual(false, st_traverse_utils:key_exists(key, undefined))}
         , {"Result should be false", ?_assertEqual(false, st_traverse_utils:key_exists(key, [{other_key, 1}]))}
         , {"Result should be true", ?_assertEqual(true, st_traverse_utils:key_exists(key, [{key, 1}]))}
-        , {"Result should be true", ?_assertEqual(true, st_traverse_utils:key_exists(key, #{key => 1}))}
+        , {"Result should be true", ?_assertEqual(true, st_traverse_utils:key_exists(key, maps:from_list([{key, 1}])))}
     ].
 
 %%--------------------------------------------------------------------
