@@ -1,3 +1,4 @@
+PROJECT = st_commons
 REBAR ?= $(shell which rebar3)
 
 ifeq ($(REBAR),)
