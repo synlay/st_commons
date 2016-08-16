@@ -52,6 +52,12 @@ tar:
 ########################################################################################################################
 ifeq ($(TRAVIS),true)
 
+ERL = $(shell which erl)
+
+ifeq ($(ERL),)
+$(error "Erlang not available on this system")
+endif
+
 # For use on Travis CI, skip dialyzer for R14 and R15. Newer versions
 # have a faster dialyzer that is less likely to cause a build timeout.
 SKIP_DIALYZER ?= false
@@ -138,7 +144,7 @@ else
 BASE_PLT := ~/.cache/rebar3/.concrete_dialyzer_plt_$(BASE_PLT_ID)_$(ERLANG_VERSION).plt
 endif
 
-DIALYZER_SRC = -r _build/test/lib/$(PROJECT)/ebin
+DIALYZER_SRC = -r _build/ci+test/lib/$(PROJECT)/ebin
 
 # Only include local PLT if we have deps that we are going to analyze
 ifeq ($(strip $(DIALYZER_DEPS)),)
