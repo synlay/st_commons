@@ -13,6 +13,7 @@ otp_release:
   - 17.1
 env:
   - REBAR3=true
+  - DEBUG=1
 script: "make travis_ci"
 cache:
   directories:
