@@ -27,7 +27,7 @@ endif
 
 ci: test dialyze
 
-travis_ci: ci coveralls
+travis_ci: $(REBAR) ci coveralls
 
 coveralls:
 	@$(REBAR) as ci coveralls send
