@@ -1,8 +1,0 @@
-Dependencies
-. rebar
-. make
-
-Build
-To build the st_commons library just run make.
-$ make
-

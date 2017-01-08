@@ -6,3 +6,5 @@ deps.plt
 .concrete
 .idea
 *.iml
+*.crashdump
+_build

@@ -1,0 +1,17 @@
+language: erlang
+otp_release:
+  - 19.2
+  - 19.1
+  - 19.0
+  - 18.3
+  - 18.2.1
+  - 18.1
+  - 18.0
+  - 17.5
+  - 17.4
+  # - 17.3 => see ssl_handshake error with hex.pm
+  - 17.1
+script: "make rebuild"
+cache:
+  directories:
+  - "$HOME/.cache/rebar3/hex/default"
