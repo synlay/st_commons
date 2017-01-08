@@ -27,6 +27,11 @@ endif
 
 ci: test dialyze
 
+travis_ci: ci coveralls
+
+coveralls:
+	@$(REBAR) as ci coveralls send
+
 ifeq ($(TRAVIS),true)
 dialyze:
 	@echo starting static code analysis with dialyzer...
@@ -180,4 +185,4 @@ endif
 
 endif
 
-.PHONY: all compile test dialyze distclean rebuild rel tar dialyzer_concrete
+.PHONY: all compile test dialyze distclean rebuild rel tar dialyzer_concrete ci travis_ci coveralls
