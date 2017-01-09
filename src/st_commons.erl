@@ -1,5 +1,12 @@
--module(libmisc).
--vsn("1.0.0").
+%%%-------------------------------------------------------------------
+%%% @author David Robakowski
+%%% @copyright (C) 2015, Synlay Technologies UG & Co. KG
+%%% @doc
+%%%
+%%% @end
+%%% Created :
+%%%-------------------------------------------------------------------
+-module(st_commons).
 
 -type epoch_timestamp() :: integer().
 
@@ -15,7 +22,7 @@
     ,id/1
 ]).
 
--include("libmisc.hrl").
+-include("st_commons.hrl").
 
 -spec hex_to_bin(string()) -> binary().
 hex_to_bin(Str) ->

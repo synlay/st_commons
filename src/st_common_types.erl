@@ -15,8 +15,6 @@
 -type either(A, B) :: {left, A}
                     | {right, B}.
 
--ifdef(have_not_parameterized_dict_and_sets_support).
-
 %% ------------------------------------
 %% Type: dict
 %% where:
@@ -27,19 +25,13 @@
 %%    the type dict(), for better
 %%    documentation purposes.
 %% ------------------------------------
--type dict(_K,_V) :: dict().
+-type dict(K,V) :: dict:dict(K, V).
 %% ------------------------------------
 
--type set(_Val) :: set().
-
--else.
+-type set(Val) :: sets:set(Val).
 
 %% Erl >= 17 => maps support available
 -type map_(Key, Value) :: #{Key => Value}.
--type dict(K,V) :: dict:dict(K, V).
--type set(Val) :: sets:set(Val).
-
--endif.
 
 -type proplist(Key, Value) :: [{Key, Value}].
 -type orddict(Key, Value)  :: [{Key, Value}].
@@ -49,12 +41,7 @@
     ,either/2
     ,dict/2
     ,set/1
+	,map_/2
     ,proplist/2
     ,orddict/2
 ]).
-
--ifndef(have_not_parameterized_dict_and_sets_support).
--export_type([
-    map_/2
-]).
--endif.

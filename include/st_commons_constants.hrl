@@ -1,5 +1,5 @@
--ifndef(_common_constants_included).
--define(_common_constants_included, true).
+-ifndef(_st_commons_constants_included).
+-define(_st_commons_constants_included, true).
 
 -ifdef(debug).
     -define(TRACE(X), io:format("TRACE ~p:~p ~p~n", [?MODULE, ?LINE, X])).

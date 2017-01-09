@@ -4,3 +4,7 @@ deps
 deps.plt
 .rebar
 .concrete
+.idea
+*.iml
+*.crashdump
+_build

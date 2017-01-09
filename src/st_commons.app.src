@@ -1,0 +1,17 @@
+{application, st_commons,
+ [
+  {description, "Synlay Technologies Commons is a Synlay project focused on all aspects of reusable Erlang components."},
+  {vsn, "1.2.1"},
+  {modules, [st_commons]},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {maintainers, ["David Robakowski"]},
+  {licenses, ["MIT"]},
+  {links, [
+    {"GitHub", "https://github.com/synlay/st_commons"}
+  ]},
+  {env, []}
+ ]}.

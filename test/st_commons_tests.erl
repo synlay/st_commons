@@ -1,8 +1,8 @@
--module(libmisc_tests).
+-module(st_commons_tests).
 
 -include_lib("eunit/include/eunit.hrl").
 
-libmisc_test_() ->
+st_commons_test_() ->
     {setup,
         fun() ->
             ok
@@ -11,7 +11,7 @@ libmisc_test_() ->
             ok
         end,
         [
-            {"libmisc_tests is alive",
+            {"st_commons_tests is alive",
                 fun() ->
                     %% format is always: expected, actual
                     ?assert(true)
